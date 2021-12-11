@@ -273,6 +273,54 @@ const getFormattedMobile = (mobileRaw: number | string, regionCode: string) => {
   }
 };
 
+
+const titleCaseadrs = (adrs: string) =>
+  adrs
+    .split(" ")
+    .map((adrs: string) => {
+      const word = adrs.toLowerCase();
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+
+
+const validatePhoneNumber = (input_str: any) => {
+  let re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+  return re.test(input_str);
+};
+
+const isNumeric = (value: any) => {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+};
+
+
+
+function isFutureDate(idate: any) {
+  let today = new Date().getTime();
+  idate = idate.split("/");
+  idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
+  console.log("idate", idate);
+  return today - idate < 0 ? true : false;
+}
+
+
+function stringToDate(_date: any, _format: any, _delimiter: any) {
+  var formatLowerCase = _format.toLowerCase();
+  var formatItems = formatLowerCase.split(_delimiter);
+  var dateItems = _date.split(_delimiter);
+  var monthIndex = formatItems.indexOf("mm");
+  var dayIndex = formatItems.indexOf("dd");
+  var yearIndex = formatItems.indexOf("yyyy");
+  var month = parseInt(dateItems[monthIndex]);
+  month -= 1;
+  var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+  return formatedDate;
+}
+
+
+
+
 export {
   config,
   httpResp,
